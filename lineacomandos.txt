@@ -1,0 +1,3 @@
+abrir consola desde la carpeta donde está el repositorio de git, documentos.arduino
+git status
+
