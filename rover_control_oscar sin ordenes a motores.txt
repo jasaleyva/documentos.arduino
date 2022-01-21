@@ -1,0 +1,39 @@
+#include <AFMotor.h>
+AF_DCMotor Motor1(1);
+AF_DCMotor Motor2(4);
+const int trigPin = A5; // constant
+const int echoPin = A4;
+
+void setup()
+   {        
+       Serial.begin (9600); // Initializes serial communicationMotor1.run(RELEASE);
+       Motor1.run(RELEASE);
+       Motor2.run(RELEASE);
+       pinMode(trigPin, OUTPUT);
+       pinMode(echoPin, INPUT);
+       delay(2000); //time to put the robot on the floor
+   }
+
+void loop()
+{ long duration, range ;
+  
+    digitalWrite(trigPin, LOW);   // Resets trigger
+    delayMicroseconds(2);     
+    digitalWrite(trigPin, HIGH);  // Enables transmission pulse
+    delayMicroseconds(10);    
+    digitalWrite(trigPin, LOW); // Disables transmission pulse and waits for echo
+
+    duration = pulseIn(echoPin, HIGH) ;
+    range = duration / 58.28  ; // Calculates the range in cm.
+    //delay(300);
+    Serial.println(String(range) + " cm."); // Tools-->Serial Monitor to see the range
+
+    if (range<=40&&range!=0){
+          //si encuentra obstáculo...
+         
+          
+     } else {
+        // si NO hay obstáculos...
+
+          }
+}

@@ -1,0 +1,62 @@
+#include <AFMotor.h>
+AF_DCMotor Motor1(1);
+AF_DCMotor Motor2(4);
+const int trigPin = A5; // constant
+const int echoPin = A4; // constant
+const int led = A3;
+
+void setup()
+   {        
+       Serial.begin (9600); // Initializes serial communicationMotor1.run(RELEASE);
+       Motor1.run(RELEASE);
+       Motor2.run(RELEASE);
+       pinMode(trigPin, OUTPUT);
+       pinMode(echoPin, INPUT);
+       pinMode(led, OUTPUT);
+       delay(2000); //time to put the robot on the floor
+   }
+
+void loop()
+{ long duration, range ;
+  
+    digitalWrite(trigPin, LOW);   // Resets trigger
+    delayMicroseconds(2);     
+    digitalWrite(trigPin, HIGH);  // Enables transmission pulse
+    delayMicroseconds(10);    
+    digitalWrite(trigPin, LOW); // Disables transmission pulse and waits for echo
+
+    duration = pulseIn(echoPin, HIGH) ;
+    range = duration / 58.28  ; // Calculates the range in cm.
+    //delay(300);
+    Serial.println(String(range) + " cm."); // Tools-->Serial Monitor to see the range
+
+    if (range<=40){
+          //&&range!=0 in case the range module crashes
+          Motor1.run(RELEASE);
+          Motor2.run(RELEASE);
+          delay (500);
+          digitalWrite(led, HIGH);
+          Motor1.setSpeed(150);
+          Motor2.setSpeed(150);
+          Motor1.run(BACKWARD);
+          Motor2.run(BACKWARD);
+          delay (500);
+          //turn left 45º-------
+          Motor1.setSpeed(80);
+          Motor2.setSpeed(80);
+          Motor1.run(FORWARD);
+          Motor2.run(BACKWARD);
+          delay (400);
+          Motor1.run(RELEASE);
+          Motor2.run(RELEASE);
+          delay (500);
+          digitalWrite(led, LOW);
+          //---------------------
+     } else {
+          Motor1.setSpeed(120);
+          Motor2.setSpeed(170);
+          Motor1.run(FORWARD); 
+          Motor2.run(FORWARD);
+          //delay (300);//no delay here
+          }
+}
