@@ -1,3 +1,18 @@
 abrir consola desde la carpeta donde está el repositorio de git, documentos.arduino
 git status
 
+desde la terminal del equipo donde esta el proyecto que queremos subir a github
+Nos vamos a la carpeta del proyecto y ejecutamos estos comandos.
+
+git init
+
+git add .
+
+git commit -m "first commit"
+
+git remote add origin https://github.com/jasaleyva/documentos.arduino.git
+
+git push -u origin main
+
+usuario para el commit: jasaleya
+pwd: token en github, buscar en gamil
